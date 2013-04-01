@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript">
+        var data = {
+            "广东省": ["广州", "深圳", "珠海", "中山", "东莞", "佛山", "惠州", "湛江"],
+            "福建省": ["福州", "龙岩", "泉州", "厦门", "南平", "宁德"],
+            "浙江省": ["杭州", "湖州", "嘉兴", "金华", "丽水", "宁波"]
+        };
+        function loadProv() {
+            for (var prov in data) {
+                var optionCreate = document.createElement("option");
+                optionCreate.value = prov;
+                optionCreate.innerText = prov;
+                document.getElementById("prov").appendChild(optionCreate);
+            }
+        }
+        function selCity() {
+            var prov = document.getElementById("prov");
+            var city = document.getElementById("city");
+
+            //先清除之前选择过的市列表
+            //city.options.length = 0;//方法一
+            for (var i = city.childNodes.length-1; i >= 0; i--) {
+                var option = city.childNodes[i];
+                city.remove(option);
+            }
+            var provName = prov.value;
+            if (provName == "none") {
+                return;
+            }
+            var cities = data[provName];
+            for (var i = 0; i < cities.length; i++) {
+                var optionCreate = document.createElement("option");
+                optionCreate.value = data[provName][i];
+                optionCreate.innerText = data[provName][i];
+                document.getElementById("city").appendChild(optionCreate);
+            }
+        }
+    </script>
+</head>
+<body onload="loadProv()">
+    省：<select id="prov" style="width:120px;" onchange="selCity()">
+        <option value="none">---请选择省份---</option>
+      </select>
+    市/县：<select id="city" style="width:100px;"></select>
+</body>
+</html>
